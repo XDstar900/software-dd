@@ -17,9 +17,9 @@ def login():
         global attempts
         attempts -= 1
         Log_in_label.config(text=f"Login failed. You have {attempts} left. ", fg="red")
-        if attempts == 0: # ends program after 3 failed attempts
+        if attempts <= 0: # ends program after 3 failed attempts
             Log_in_label.config(text="Login failed. No attempts left.", fg="red")
-            UI.after(1000, UI.destroy) 
+            UI.after(1000, exit) 
 
 
 
@@ -44,3 +44,15 @@ Log_in_label.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
 
 UI.mainloop() #loads the window
 
+while True:
+        Course = input("Choose an option using the letters in the brackets:\n (A) Chicken handling \n (B) Health and safety procedures \n (C) Go to shop \n").upper()
+        match Course: # casewhere statement in python to check the user's input
+            case "A":
+                print("Chicken handling")
+            case "B":
+                print("Health and safety procedures")
+            case "C":
+                print("Go to shop")
+            case _:
+                print("Invalid option. Please choose A, B, or C.")
+                continue # loops back to the input prompt if an invalid option is chosen
