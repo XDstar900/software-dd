@@ -1,5 +1,5 @@
 from tkinter import * 
-
+from random import choice
 
 UI = Tk()
 User = Entry()
@@ -21,10 +21,35 @@ def login():
             Log_in_label.config(text="Login failed. No attempts left.", fg="red")
             UI.after(1000, exit) 
 
-
+def course(QA_Bank):
+    points_earned = 0 
+    while points_earned < 50:
+        if QA_Bank == False: 
+            return # ends fucntion as user went to the shop.
+        question = choice(QA_Bank) # randomly selects a question from the question bank
+        while True: # loops until user gives a valid answer
+            print(question['scenario'])
+            for option, text in question['options'].items(): #Loops through options and displays in readable format. 
+                print(f"{option}: {text}")
+            answer = input("Your answer: ").upper()
+            if answer not in question['options']:
+                print("Invalid option. Please choose a valid option.")
+                return course(QA_Bank) # loops back to the question if an invalid option is chosen
+            if answer == question['correct_answer']:
+                print("Correct!")
+                match question['is_challenge']: # checks if the question is a challenge question to determine points earned
+                    case True:
+                        points_earned += 10
+                    case False:
+                        points_earned += 5
+            else:
+                print("Incorrect.")
+                print(f"Explanation: {question['explanation']}")
+                if question["is_challenge"]: # if the question is a challenge question, the user loses points for getting it wrong. 
+                    points_earned -= 5  
 
 #sets up UI
-UI.title("KFC training program")
+UI.title("KFC Scenario Simulator")
 UI.configure(bg = "#00BAFF")
 Log_in_label = Label(UI, text="Log in", font=("Arial", 24, "bold"), bg="#00BAFF")
 Username_label = Label(UI, text="Username", font=("Arial", 18),  bg="#00BAFF")
@@ -57,7 +82,7 @@ while True:
                         'A': 'Continue using it - close enough',
                         'B': 'Report it to management immediately',
                         'C': 'Try to adjust temperature yourself',
-                        'D': 'Move all food to another fridge'
+                        'D': 'Move all food to another fridge\n'
                     },
                     'correct_answer': 'B',
                     'explanation': 'Temperature control issues must be reported immediately.',
@@ -113,6 +138,6 @@ while True:
         case _:
             print("Invalid option. Please choose A, B, or C.")
             continue # loops back to the input prompt if an invalid option is chosen
-        
+    course(QA_Bank)   
     
     
