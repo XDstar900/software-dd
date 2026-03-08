@@ -1,5 +1,8 @@
 from tkinter import * 
 from random import choice
+from colorama import
+
+colorama.init()
 
 UI = Tk()
 User = Entry()
