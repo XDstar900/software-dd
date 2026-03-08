@@ -70,10 +70,10 @@ Log_in_label.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
 UI.mainloop() #loads the window
 
 while True:
-    Course = input("Choose an option using the letters in the brackets:\n (A) Chicken cooking and handling \n (B) Health and safety procedures \n (C) Go to shop \n").upper()
+    Course = input("Choose an option using the letters in the brackets:\n (A) Chicken cooking and handling \n (B) Health and safety procedures \n (C) Go to shop \n Your Input: ").upper()
     match Course: # casewhere statement in python to check the user's input
         case "A":
-            print("Chicken cooking and handling")
+            print("Chicken cooking and handling") #debug
             #QA_Bank is a list of dictionaries, each conaitng all the information required for question 
             QA_Bank = ({
                     'id': 1,
@@ -131,7 +131,7 @@ while True:
 
             )
         case "B":
-            print("Health and safety procedures")
+            print("Health and safety procedures") #debug
         case "C":
             print("Go to shop")
             QA_Bank = False # resets the question bank to prevent user from accessing it when they go to the shop and prevents crashing when they come out of shop. 
