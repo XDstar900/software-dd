@@ -7,8 +7,10 @@ UI = Tk()
 User = Entry()
 Password = Entry()
 attempts = 3
+Wallet = 0
 init(autoreset=True)   
 
+# Logic for creditiential validation. Occurs when button in pressed. 
 def login():
     username = User.get()
     password = Password.get()
@@ -24,37 +26,50 @@ def login():
             Log_in_label.config(text="Login failed. No attempts left.", fg="red")
             UI.after(1000, exit) 
 
+
+# logic for training
 def course(QA_Bank):
-    points_earned = 0 
+    points_earned =  50
+    if points_earned >= 50:
+        return  points_earned
     while points_earned < 50:
         if QA_Bank == False: 
             return # ends fucntion as user went to the shop.
         question = choice(QA_Bank) # randomly selects a question from the question bank
         while True: # loops until user gives a valid answer
+            if question["is_challenge"] == True:
+                print("⭐ Challenge question ⭐\n"
+                    "Get it " + Fore.GREEN + "correct" + Style.RESET_ALL+ " for 10 points\n"
+                    "Get it " + Fore.RED + "wrong" + Style.RESET_ALL+ " and lose 10 points")  
+                sleep(2) 
             print(question['scenario'])
+            sleep(2)
             for option, text in question['options'].items(): #Loops through options and displays in readable format. 
                 print(f"{option}: {text}")
             answer = input("Your answer: ").upper()
             if answer not in question['options']:
-                print(Fore.RED, "Invalid option. Please choose a valid option.")
+                print(Fore.RED + "Invalid option. Please choose a valid option.")
                 return course(QA_Bank) # loops back to the question if an invalid option is chosen
             if answer == question['correct_answer']:
-                print(Fore.GREEN,"Correct!")
+                print(Fore.GREEN + "Correct!")
                 sleep(1)
                 match question['is_challenge']: # checks if the question is a challenge question to determine points earned
                     case True:
                         points_earned += 10
-                        print(Fore.RED, f"Good job you now have {points_earned}.")
+                        print(Fore.GREEN +"10 points have been added")
+                        print(Fore.GREEN + f"Good job you are up at {points_earned}.")
                     case False:
                         points_earned += 5
-                        print(Fore.RED, f"You now have {points_earned}.")
+                        print(Fore.GREEN +"5 points have been added")
+                        print(Fore.GREEN + f"You are up at {points_earned}.")
             else:
-                print(Fore.RED, "Incorrect.")
-                print(f"Explanation: {question['explanation']}")
+                print(Fore.RED + "Incorrect.")
+                print(f"Explanation: {question['explanation']}\n")
                 sleep(3)
                 if question["is_challenge"]: # if the question is a challenge question, the user loses points for getting it wrong. 
-                    points_earned -= 5  
-                    print("5 points have been deducted")
+                    points_earned -= 10  
+                    print(Fore.RED +"10 points have been deducted")
+                    print(Fore.RED +f"You are at {points_earned}")
 
 #sets up UI
 UI.title("KFC Scenario Simulator")
@@ -146,6 +161,7 @@ while True:
         case _:
             print("Invalid option. Please choose A, B, or C.")
             continue # loops back to the input prompt if an invalid option is chosen
-    course(QA_Bank)   
+    course(QA_Bank)
+   
     
     
