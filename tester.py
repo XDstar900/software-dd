@@ -7,6 +7,7 @@ UI = Tk()
 User = Entry()
 Password = Entry()
 attempts = 3
+global Wallet # allows user's point wallet to be modified by any function
 Wallet = 0
 init(autoreset=True)   
 
@@ -29,9 +30,10 @@ def login():
 
 # logic for training
 def course(QA_Bank):
-    points_earned =  50
+    points_earned =  0 
     if points_earned >= 50:
-        return  points_earned
+        print(Fore.GREEN + f"Congratulations!{Style.RESET_ALL} You have completed the course.")
+        print(f"You now have {Wallet} points to spend at the shop.")
     while points_earned < 50:
         if QA_Bank == False: 
             return # ends fucntion as user went to the shop.
@@ -46,7 +48,7 @@ def course(QA_Bank):
             sleep(2)
             for option, text in question['options'].items(): #Loops through options and displays in readable format. 
                 print(f"{option}: {text}")
-            answer = input("Your answer: ").upper()
+            answer = input("\nYour answer: ").upper()
             if answer not in question['options']:
                 print(Fore.RED + "Invalid option. Please choose a valid option.")
                 return course(QA_Bank) # loops back to the question if an invalid option is chosen
@@ -162,6 +164,7 @@ while True:
             print("Invalid option. Please choose A, B, or C.")
             continue # loops back to the input prompt if an invalid option is chosen
     course(QA_Bank)
+    print(f"You have {Wallet} points in your wallet.")
    
-    
+
     
