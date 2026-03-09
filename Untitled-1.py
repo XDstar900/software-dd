@@ -1,6 +1,6 @@
 from tkinter import * 
 from random import choice
-from colorama import
+from colorama import 
 
 colorama.init()
 
