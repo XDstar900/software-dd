@@ -35,55 +35,61 @@ def login():
 
 # logic for training
 def course(QA_Bank):
+    global Wallet
     points_earned =  0 
-    if points_earned >= 50:
-        print(Fore.GREEN + f"Congratulations!{Style.RESET_ALL} You have completed the course.")
-        print(f"You now have {Wallet} points to spend at the shop.")
-        input("Press any key to continue:  ") #Pauses the program so the user can see their items 
-    while points_earned < 50:
-        if QA_Bank == False: 
-            return # ends fucntion as user went to the shop.
-        question = choice(QA_Bank) # randomly selects a question from the question bank
-        while True: # loops until user gives a valid answer
-            if question["is_challenge"] == True:
-                print("⭐ Challenge question ⭐\n"
-                    "Get it " + Fore.GREEN + "correct" + Style.RESET_ALL+ " for 10 points\n"
-                    "Get it " + Fore.RED + "wrong" + Style.RESET_ALL+ " and lose 10 points")  
-                input("Press any key to continue: \n") #Pauses the program so the user can see their items  
-            print(question['scenario'])
-            sleep(2)
-            for option, text in question['options'].items(): #Loops through options and displays in readable format. 
-                print(f"{option}: {text}")
-            answer = input("\nYour answer: ").upper() #User's answer, starts anew line for enhanced readability
-            if answer not in question['options']:
-                print(Fore.RED + "Invalid option. Please choose a valid option.")
-                return course(QA_Bank) # loops back to the question if an invalid option is chosen
-            if answer == question['correct_answer']:
-                print(Fore.GREEN + "Correct!")
-                sleep(1)
-                match question['is_challenge']: # checks if the question is a challenge question to determine points earned
-                    case True:
-                        points_earned += 10
-                        print(Fore.GREEN +"10 points have been added")
-                        print(Fore.GREEN + f"Good job you have {points_earned} points.")
+    while True: 
+        while points_earned < 50:
+            question = choice(QA_Bank) # randomly selects a question from the question bank
+            while True: # loops until user gives a valid answer
+                if question["is_challenge"] == True:
+                    print("⭐ Challenge question ⭐\n"
+                        "Get it " + Fore.GREEN + "correct" + Style.RESET_ALL+ " for 10 points\n"
+                        "Get it " + Fore.RED + "wrong" + Style.RESET_ALL+ " and lose 10 points")  
+                    input("Press any key to continue: \n") #Pauses the program so the user can see their items  
+                print(question['scenario'])
+                sleep(2)
+                for option, text in question['options'].items(): #Loops through options and displays in readable format. 
+                    print(f"{option}: {text}")
+                answer = input("\nYour answer: ").upper() #User's answer, starts anew line for enhanced readability
+                if answer not in question['options']:
+                    print(Fore.RED + "Invalid option. Please choose a valid option.")
+                    return course(QA_Bank) # loops back to the question if an invalid option is chosen
+                if answer == question['correct_answer']:
+                    print(Fore.GREEN + "Correct!")
+                    sleep(1)
+                    match question['is_challenge']: # checks if the question is a challenge question to determine points earned
+                        case True:
+                            points_earned += 10
+                            print(Fore.GREEN +"10 points have been added")
+                            print(Fore.GREEN + f"Good job you have {points_earned} points.")
+                            input("Press any key to continue: \n") #Pauses the program so the user can see their points
+                            continue # loops back for the next question
+                    
+                        case False:
+                            points_earned += 5
+                            print(Fore.GREEN +"5 points have been added")
+                            print(Fore.GREEN + f"You have {points_earned} points.")
+                            input("Press any key to continue: \n") #Pauses the program so the user can see their points
+                            continue # loops back for the next question
+                else:
+                    print(Fore.RED + "Incorrect.")
+                    print(f"Explanation: {question['explanation']}\n")
+                    input("Press any key to continue: \n") #Pauses the program so the user can see the explanation
+                    if question["is_challenge"]: # If the question is a challenge question, the user loses points for getting it wrong. 
+                        points_earned -= 10  
+                        print(Fore.RED +"10 points have been deducted")
+                        print(Fore.RED +f"You have {points_earned} points.")
                         input("Press any key to continue: \n") #Pauses the program so the user can see their points
-                    case False:
-                        points_earned += 5
-                        print(Fore.GREEN +"5 points have been added")
-                        print(Fore.GREEN + f"You have {points_earned} points.")
-                        input("Press any key to continue: \n") #Pauses the program so the user can see their points
-            else:
-                print(Fore.RED + "Incorrect.")
-                print(f"Explanation: {question['explanation']}\n")
-                input("Press any key to continue: \n") #Pauses the program so the user can see the explanation
-                if question["is_challenge"]: # If the question is a challenge question, the user loses points for getting it wrong. 
-                    points_earned -= 10  
-                    print(Fore.RED +"10 points have been deducted")
-                    print(Fore.RED +f"You have {points_earned} points.")
-                    input("Press any key to continue: \n") #Pauses the program so the user can see their points
+                    continue # loops back for the next question
+        if points_earned >= 50:
+            Wallet += points_earned
+            print(Fore.GREEN + f"Congratulations!{Style.RESET_ALL} You have completed the course.")
+            print(f"You now have {Wallet} points to spend at the shop.")
+            input("Press any key to continue:  ") #Pauses the program so the user can see read output 
 
 #shop module for user to buy items with points, view their items.  
 def shop():
+    global Wallet
     print(f"Welcome to the shop!\nYou have {Wallet} points to spend.")
     while True: #Loop that keeps the shop running until the user chooses to leave.
         choice = input("Please choose one of the following options:\nBuy (A)\nView owned items (B)\nLeave (C)\nYour option: ").upper()
@@ -113,7 +119,6 @@ def shop():
 #sets up UI
 UI.title("KFC Scenario Simulator")
 UI.configure(bg = "#00BAFF")
-Log_in_label = Label(UI, text="Log in", font=("Arial", 24, "bold"), bg="#00BAFF")
 Username_label = Label(UI, text="Username", font=("Arial", 18),  bg="#00BAFF")
 User.config(bg = "#FFFFFF", font=("Arial", 18), width=30, borderwidth=2,)
 Password_label = Label(UI, text="Password", font=("Arial", 18), bg="#00BAFF")
@@ -136,8 +141,7 @@ while True:
     Course = input("Choose an option using the letters in the brackets:\n (A) Chicken cooking and handling \n (B) Health and safety procedures \n (C) Go to shop \n Your Input: ").upper()
     match Course: # casewhere statement in python to check the user's input
         case "A":
-            print("Chicken cooking and handling") #debug
-            #QA_Bank is a list of dictionaries, each conaitng all the information required for question 
+            #QA_Bank is a list of dictionaries, each containing all the information required for question 
             QA_Bank = ({
                     'id': 1,
                     'scenario': 'The refrigerator temperature reads 8°C. Should you:',
@@ -166,7 +170,7 @@ while True:
             },
             {
             'id': 3,
-            'scenario': 'What colour chux do you need to use to clean the fryers after dropping a batch of chicken?',
+            'scenario': 'You have loaded the fryers and finished cooking. What colour chux do you pcik to clean the fryers with? ',
             'options': {
                 'A': "Green",
                 'B': "Blue",
@@ -190,6 +194,44 @@ while True:
             'explanation': "Sifting and topping up the flour as you go, ensures that the flour is top quality while allowing you to bread all the chicken quickly.",
             'is_challenge': True
             },
+            {'id':5 ,
+         'scenario': "You have recieved a batch of chicken to cook. What is the first thing you do?" ,
+         'options': {
+               'A': "get to it immediately",
+               'B': "wash hands and put gloves and apron on ",
+               'C': "Continue what I was doing",
+               'D': "Get the chicken",
+         },
+         'correct_answer': "B",
+         'explanation': "Since you are working with raw chicken, hygiene is important.",
+         'is_challenge': False
+         },
+         {'id':6 ,
+         'scenario': "You have just clocked in for your shift. What is the first thing you do?" ,
+         'options': {
+               'A': "Start your tasks",
+               'B': "Set up your station",
+               'C': "Inquire about any specials or important information for the day",
+               'D': "Wash your hands",
+         },
+         'correct_answer': "D",
+         'explanation': "No matter what. The first you do is wash your hands, after clocking in. No excuses allowed",
+         'is_challenge': False
+        },
+        {'id':7 ,
+         'scenario': "Huh that is wierd? What is the fryer doing?", 
+         'options': {
+               'A': "I am going to aks the manager",
+               'B': "Let's just ignore it",
+               'C': "I am evacuating. RUN RUN RUN.", 
+               'D': "We need to investigate"
+         },
+         'correct_answer': "A",
+         'explanation': "Chances are it is completely normal so ask just ask someone. If it does need investigating, inform the manager on duty. They will know what to do.",
+         'is_challenge': False 
+        }
+
+
 
 
             )
