@@ -1,4 +1,4 @@
-
+Owned_items = [] #List of items the user has purchased.
 global wallet
 wallet = 500
 items = { # dictionary of items in the shop and their prices. Structure is item: (price, input number for user to select the item)
