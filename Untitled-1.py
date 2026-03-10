@@ -2,9 +2,9 @@ Owned_items = [] #List of items the user has purchased.
 global wallet
 wallet = 500
 items = { # dictionary of items in the shop and their prices. Structure is item: (price, input number for user to select the item)
-    "⚔️":(25,(1)),
-    "🥽":(15,(2)),
-    "🛡️":(30,(3)),
+    "⚔️":(25,("1")),
+    "🥽":(15,("2")),
+    "🛡️":(30,("3")),
 }
 def shop():
     global wallet
@@ -25,7 +25,7 @@ def shop():
                         if wallet >= price:
                             wallet -= price
                             Owned_items.append(item)
-                            print(f"You have purchased {item} for {price} points. You have {wallet} points left.")
+                            print(f"You have purchased {item}  for {price} points. You have {wallet} points left.")
                         else:
                             print("You do not have enough points to purchase this item.")
             case "B":
