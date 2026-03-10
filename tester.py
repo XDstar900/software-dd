@@ -34,6 +34,7 @@ def course(QA_Bank):
     if points_earned >= 50:
         print(Fore.GREEN + f"Congratulations!{Style.RESET_ALL} You have completed the course.")
         print(f"You now have {Wallet} points to spend at the shop.")
+        input("Press any key to continue: ") #Pauses the program so the user can see their items 
     while points_earned < 50:
         if QA_Bank == False: 
             return # ends fucntion as user went to the shop.
@@ -43,7 +44,7 @@ def course(QA_Bank):
                 print("⭐ Challenge question ⭐\n"
                     "Get it " + Fore.GREEN + "correct" + Style.RESET_ALL+ " for 10 points\n"
                     "Get it " + Fore.RED + "wrong" + Style.RESET_ALL+ " and lose 10 points")  
-                sleep(2) 
+                input("Press any key to continue: ") #Pauses the program so the user can see their items  
             print(question['scenario'])
             sleep(2)
             for option, text in question['options'].items(): #Loops through options and displays in readable format. 
@@ -60,10 +61,12 @@ def course(QA_Bank):
                         points_earned += 10
                         print(Fore.GREEN +"10 points have been added")
                         print(Fore.GREEN + f"Good job you are up at {points_earned}.")
+                        input("Press any key to continue: ") #Pauses the program so the user can see their points
                     case False:
                         points_earned += 5
                         print(Fore.GREEN +"5 points have been added")
                         print(Fore.GREEN + f"You are up at {points_earned}.")
+                        input("Press any key to continue: ") #Pauses the program so the user can see their points
             else:
                 print(Fore.RED + "Incorrect.")
                 print(f"Explanation: {question['explanation']}\n")
@@ -72,6 +75,7 @@ def course(QA_Bank):
                     points_earned -= 10  
                     print(Fore.RED +"10 points have been deducted")
                     print(Fore.RED +f"You are at {points_earned}")
+                    input("Press any key to continue: ") #Pauses the program so the user can see their points
 
 #sets up UI
 UI.title("KFC Scenario Simulator")

@@ -2,9 +2,10 @@ Owned_items = [] #List of items the user has purchased.
 global wallet
 wallet = 500
 items = { # dictionary of items in the shop and their prices. Structure is item: (price, input number for user to select the item)
-    "⚔️":(25,("1")),
-    "🥽":(15,("2")),
-    "🛡️":(30,("3")),
+    "⚔️ ":(25,("1")),
+    "🥽 ":(15,("2")),
+    "🛡️ ":(30,("3")),
+    "🧀 ":(20,("4"))
 }
 def shop():
     global wallet
@@ -18,10 +19,7 @@ def shop():
                 Purchase = input("Please input the number in brackets for the item you wish to purchase: ")
                 #with purchase loop through itmes to find out price and the item the user wants to purchase. If they have enough points, they purchase the item and it is added to their owned items. If they do not have enough points, they are informed and looped back to the shop menu.
                 for item, (price, input_number) in items.items():
-                    if Purchase == input_number:
-                        print(item)
-                        print(price)
-                        print(input_number)
+                    if Purchase == input_number: #Only goes through buying process if the user input matches the item number
                         if wallet >= price:
                             wallet -= price
                             Owned_items.append(item)
@@ -32,6 +30,7 @@ def shop():
                 print(f"You own these items:")
                 for item in Owned_items: #Loops through the items the user has purchased and displays them.
                     print(item)
+                input("Press any key to continue: ") #Pauses the program so the user can see their items 
             case "C":
                 print("Thank you for visiting the shop!")
                 return
