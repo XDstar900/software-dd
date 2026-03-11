@@ -45,9 +45,9 @@ def course(QA_Bank):
     input("This should only be started once you on-the-job-training has.By proceeding, you are agreeing that you HAVE received at least 1 shift of training.\nPress any key to continue: ")
     while points_earned < 50:
         question = choice(QA_Bank) # randomly selects a question from the question bank
-        while question.get("id") == asked_id:
+        while question.get("id") == asked_id: #slelects a new question if the question selected is the same as the last one. 
             question = choice(QA_Bank)
-        while True: # loops until user gives a valid answer
+        while True: # loop is used to keep asking the same question until the user gives a valid answer.
             asked_id = question.get("id")
             if question["is_challenge"] == True:
                 print("⭐ Challenge question ⭐\n"
@@ -65,14 +65,14 @@ def course(QA_Bank):
             if answer == question['correct_answer']:
                 print(Fore.GREEN + "Correct!")
                 sleep(1)
-                match question['is_challenge']: # checks if the question is a challenge question to determine points earned
+                match question['is_challenge']: # checks if the question is a challenge question to determine points earned. In challenge questions, correct answers  gives 10 points but wrongs answers lose 10 points. 
                     case True:
                         points_earned += 10
                         print(Fore.GREEN +"10 points have been added")
                         print(Fore.GREEN + f"Good job you have {points_earned} points.")
                         input("Press any key to continue: \n") #Pauses the program so the user can see their points
                 
-                    case False:
+                    case False: # In normal questions, correct answers give 5 points. User can not lose points for getting normal questions wrong. 
                         points_earned += 5
                         print(Fore.GREEN +"5 points have been added")
                         print(Fore.GREEN + f"You have {points_earned} points.")
@@ -86,7 +86,7 @@ def course(QA_Bank):
                     print(Fore.RED +"10 points have been deducted")
                     print(Fore.RED +f"You have {points_earned} points.")
                     input("Press any key to continue: \n") #Pauses the program so the user can see their points
-            break # breask the loop to move on to the next question
+            break # breaks the loop to move on to the next question
     if points_earned >= 50:
         Wallet += points_earned
         print(Fore.GREEN + f"Congratulations!{Style.RESET_ALL} You have completed the course.")
@@ -152,7 +152,7 @@ while True:
     Course = input("Choose an option using the letters in the brackets:\n (A) Chicken cooking and handling \n (B) Health and safety procedures \n (C) Go to shop \n Your Input: ").upper().replace(" ", "")
     match Course: # casewhere statement in python to check the user's input
         case "A":
-            #QA_Bank is a tuple of dictionaries, each containing all the information required by the program 
+            #QA_Bank is a tuple of dictionaries, each containing all the information required by the program. "id" is used to prevent the user from being asked the same question twice. The other fields are self explanatory based on their name.
             QA_Bank = ({
                     'id': 1,
                     'scenario': 'The refrigerator temperature reads 8°C. Should you:',
