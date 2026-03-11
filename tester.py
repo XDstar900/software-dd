@@ -86,7 +86,7 @@ def course(QA_Bank):
                     print(Fore.RED +"10 points have been deducted")
                     print(Fore.RED +f"You have {points_earned} points.")
                     input("Press any key to continue: \n") #Pauses the program so the user can see their points
-            break # breaks the loop to move on to the next question
+            break # breask the loop to move on to the next question
     if points_earned >= 50:
         Wallet += points_earned
         print(Fore.GREEN + f"Congratulations!{Style.RESET_ALL} You have completed the course.")
@@ -232,7 +232,7 @@ while True:
         {'id':7 ,
          'scenario': "Huh that is wierd? What is the fryer doing?", 
          'options': {
-               'A': "I am going to aks the manager",
+               'A': "I am going to ask the manager",
                'B': "Let's just ignore it",
                'C': "I am evacuating. RUN RUN RUN.", 
                'D': "We need to investigate"
