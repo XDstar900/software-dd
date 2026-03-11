@@ -16,7 +16,7 @@ items = { # dictionary of items in the shop and their prices. Structure is item:
     "🥽 ":(15,("2")),
     "🛡️ ":(30,("3")),
     "🧀 ":(20,("4"))
-}  
+    } 
 
 # Logic for creditiential validation. Occurs when button in pressed. 
 def login():
