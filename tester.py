@@ -3,28 +3,32 @@ from random import choice # question choosing
 from colorama import *  # for coloured text
 from time import sleep # for delays after answering questions 
 
-UI = Tk()
+UI = Tk() 
 User = Entry()
-Password = Entry()
+Pass = Entry()
+username = "" 
+password = "" 
 attempts = 3
-global Wallet # allows user's point wallet to be modified by any function
 Wallet = 0
-init(autoreset=True) 
-Owned_items = [] #List of items the user has purchased.
-items = { # dictionary of items in the shop and their prices. Structure is item: (price, input number for user to select the item)
+init(autoreset=True) # resets colour after every print 
+Owned_items = [] #List of items the user has purchased from the shop.
+items = { # dictionary of items in the shop and their prices. Structure is item: (price, item number) item number is used to select item by the user.
     "⚔️ ":(25,("1")),
     "🥽 ":(15,("2")),
     "🛡️ ":(30,("3")),
-    "🧀 ":(20,("4"))
-    } 
+    "🧀 ":(20,("4")),
+    "🎈": (30, ("5")),
+    "💸" : (50,("6")),
+}  
 
 # Logic for creditiential validation. Occurs when button in pressed. 
 def login():
+    global username, password
     username = User.get()
-    password = Password.get()
+    password = Pass.get()
     if username == "u" and password == "p":
-        Log_in_label.config(text="Login successful. Let's get started.", fg="green")
-        UI.after(2000, UI.destroy)
+        Log_in_label.config(text="Login successful. See you in the terminal.", fg="green")
+        UI.after(2000, UI.destroy) 
     else: # logs failed attempts
         global attempts
         attempts -= 1
@@ -36,68 +40,70 @@ def login():
 # logic for training
 def course(QA_Bank):
     global Wallet
-    points_earned =  0 
-    while True: 
-        while points_earned < 50:
-            question = choice(QA_Bank) # randomly selects a question from the question bank
-            while True: # loops until user gives a valid answer
-                if question["is_challenge"] == True:
-                    print("⭐ Challenge question ⭐\n"
-                        "Get it " + Fore.GREEN + "correct" + Style.RESET_ALL+ " for 10 points\n"
-                        "Get it " + Fore.RED + "wrong" + Style.RESET_ALL+ " and lose 10 points")  
-                    input("Press any key to continue: \n") #Pauses the program so the user can see their items  
-                print(question['scenario'])
-                sleep(2)
-                for option, text in question['options'].items(): #Loops through options and displays in readable format. 
-                    print(f"{option}: {text}")
-                answer = input("\nYour answer: ").upper() #User's answer, starts anew line for enhanced readability
-                if answer not in question['options']:
-                    print(Fore.RED + "Invalid option. Please choose a valid option.")
-                    return course(QA_Bank) # loops back to the question if an invalid option is chosen
-                if answer == question['correct_answer']:
-                    print(Fore.GREEN + "Correct!")
-                    sleep(1)
-                    match question['is_challenge']: # checks if the question is a challenge question to determine points earned
-                        case True:
-                            points_earned += 10
-                            print(Fore.GREEN +"10 points have been added")
-                            print(Fore.GREEN + f"Good job you have {points_earned} points.")
-                            input("Press any key to continue: \n") #Pauses the program so the user can see their points
-                            continue # loops back for the next question
-                    
-                        case False:
-                            points_earned += 5
-                            print(Fore.GREEN +"5 points have been added")
-                            print(Fore.GREEN + f"You have {points_earned} points.")
-                            input("Press any key to continue: \n") #Pauses the program so the user can see their points
-                            continue # loops back for the next question
-                else:
-                    print(Fore.RED + "Incorrect.")
-                    print(f"Explanation: {question['explanation']}\n")
-                    input("Press any key to continue: \n") #Pauses the program so the user can see the explanation
-                    if question["is_challenge"]: # If the question is a challenge question, the user loses points for getting it wrong. 
-                        points_earned -= 10  
-                        print(Fore.RED +"10 points have been deducted")
-                        print(Fore.RED +f"You have {points_earned} points.")
+    points_earned =  0
+    asked_id = 0 # default value is 0. Used to prevent being assked the same question twice in a row. 
+    input("This should only be started once you on-the-job-training has.By proceeding, you are agreeing that you HAVE received at least 1 shift of training.\nPress any key to continue: ")
+    while points_earned < 50:
+        question = choice(QA_Bank) # randomly selects a question from the question bank
+        while question.get("id") == asked_id: #slelects a new question if the question selected is the same as the last one. 
+            question = choice(QA_Bank)
+        while True: # loop is used to keep asking the same question until the user gives a valid answer.
+            asked_id = question.get("id")
+            if question["is_challenge"] == True:
+                print("⭐ Challenge question ⭐\n"
+                    "Get it " + Fore.GREEN + "correct" + Style.RESET_ALL+ " for 10 points\n"
+                    "Get it " + Fore.RED + "wrong" + Style.RESET_ALL+ " and lose 10 points")  
+                input("Press any key to continue: \n") #Pauses the program so the user can see their items  
+            print(question['scenario'])
+            sleep(2)
+            for option, text in question['options'].items(): #Loops through options and displays in readable format. 
+                print(f"{option}: {text}")
+            answer = input("\nYour answer: ").upper().replace(" ", "") #User's answer, starts a new line for enhanced readability
+            if answer not in question['options']:
+                print(Fore.RED + "Invalid option. Please choose a valid option.")
+                continue
+            if answer == question['correct_answer']:
+                print(Fore.GREEN + "Correct!")
+                sleep(1)
+                match question['is_challenge']: # checks if the question is a challenge question to determine points earned. In challenge questions, correct answers  gives 10 points but wrongs answers lose 10 points. 
+                    case True:
+                        points_earned += 10
+                        print(Fore.GREEN +"10 points have been added")
+                        print(Fore.GREEN + f"Good job you have {points_earned} points.")
                         input("Press any key to continue: \n") #Pauses the program so the user can see their points
-                    continue # loops back for the next question
-        if points_earned >= 50:
-            Wallet += points_earned
-            print(Fore.GREEN + f"Congratulations!{Style.RESET_ALL} You have completed the course.")
-            print(f"You now have {Wallet} points to spend at the shop.")
-            input("Press any key to continue:  ") #Pauses the program so the user can see read output 
+                
+                    case False: # In normal questions, correct answers give 5 points. User can not lose points for getting normal questions wrong. 
+                        points_earned += 5
+                        print(Fore.GREEN +"5 points have been added")
+                        print(Fore.GREEN + f"You have {points_earned} points.")
+                        input("Press any key to continue: \n") #Pauses the program so the user can see their points   
+            else:
+                print(Fore.RED + "Incorrect.")
+                print(f"Explanation: {question['explanation']}\n")
+                input("Press any key to continue: \n") #Pauses the program so the user can see the explanation
+                if question["is_challenge"]: # If the question is a challenge question, the user loses points for getting it wrong. 
+                    points_earned -= 10  
+                    print(Fore.RED +"10 points have been deducted")
+                    print(Fore.RED +f"You have {points_earned} points.")
+                    input("Press any key to continue: \n") #Pauses the program so the user can see their points
+            break # breaks the loop to move on to the next question
+    if points_earned >= 50:
+        Wallet += points_earned
+        print(Fore.GREEN + f"Congratulations!{Style.RESET_ALL} You have completed the course.")
+        print(f"You now have {Wallet} points to spend at the shop.")
+        input("Press any key to continue:  ") #Pauses the program so the user can see read output 
 
 #shop module for user to buy items with points, view their items.  
 def shop():
     global Wallet
     print(f"Welcome to the shop!\nYou have {Wallet} points to spend.")
     while True: #Loop that keeps the shop running until the user chooses to leave.
-        choice = input("Please choose one of the following options:\nBuy (A)\nView owned items (B)\nLeave (C)\nYour option: ").upper()
+        choice = input("Please choose one of the following options:\nBuy (A)\nView owned items (B)\nLeave (C)\nYour option: ").upper().replace(" ", "") 
         match choice:
             case "A":
                 for item, (price, input_number) in items.items(): #Loops though items in the shop and displays them in a readable format, with the price and the item.
                     print(f"{item}: {price} points ({input_number})")
-                Purchase = input("Please input the number in brackets for the item you wish to purchase: ")
+                Purchase = input("Please input the number in brackets for the item you wish to purchase: ").replace(" ", "")
                 for item, (price, input_number) in items.items():
                     if Purchase == input_number: #Only goes through buying process if the user input matches the item number
                         if Wallet >= price:
@@ -119,32 +125,37 @@ def shop():
                 return
             case _:
                 print("Invalid option, please try again.")
+
 #sets up UI
 UI.title("KFC Scenario Simulator")
 UI.configure(bg = "#00BAFF")
 Username_label = Label(UI, text="Username", font=("Arial", 18),  bg="#00BAFF")
 User.config(bg = "#FFFFFF", font=("Arial", 18), width=30, borderwidth=2,)
 Password_label = Label(UI, text="Password", font=("Arial", 18), bg="#00BAFF")
-Password.config(bg = "#FFFFFF", font=("Arial", 18), width=30, borderwidth=2,)
+Pass.config(bg = "#FFFFFF", font=("Arial", 18), width=30, borderwidth=2, show= "*")
 Login = Button(UI, text="Log in", font=("Arial", 18), bg="#FF0000", width=20, borderwidth=2, command = login)
 Log_in_label = Label(UI,text= "", fg="black", bg="#00BAFF", font=("Arial", 19))
-UI.resizable(False, False) # doens't allow the user to resize the window
+UI.resizable(False, False) 
 
 #Using Grid to set it all up
 Username_label.grid(row=0, column=0, padx=10, pady=10)
 User.grid(row=0, column=1, padx=10, pady=10)
 Password_label.grid(row=1, column=0, padx=10, pady=10)
-Password.grid(row=1, column=1, padx=10, pady=10)
+Pass.grid(row=1, column=1, padx=10, pady=10)
 Login.grid(row=2, column=0, columnspan=2, padx=10, pady=20)
 Log_in_label.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
 
 UI.mainloop() #loads the window
 
+if username == "" or password == "": # if the user closes the window without logging in, the program will end. 
+    print("No login detected. Ending program.")
+    exit()
+
 while True:
-    Course = input("Choose an option using the letters in the brackets:\n (A) Chicken cooking and handling \n (B) Health and safety procedures \n (C) Go to shop \n Your Input: ").upper()
+    Course = input("Choose an option using the letters in the brackets:\n (A) Chicken cooking and handling \n (B) Health and safety procedures \n (C) Go to shop \n Your Input: ").upper().replace(" ", "")
     match Course: # casewhere statement in python to check the user's input
         case "A":
-            #QA_Bank is a tuple of dictionaries, each containing all the information required by the program 
+            #QA_Bank is a tuple of dictionaries, each containing all the information required by the program. "id" is used to prevent the user from being asked the same question twice. The other fields are self explanatory based on their name.
             QA_Bank = ({
                     'id': 1,
                     'scenario': 'The refrigerator temperature reads 8°C. Should you:',
@@ -224,7 +235,7 @@ while True:
         {'id':7 ,
          'scenario': "Huh that is wierd? What is the fryer doing?", 
          'options': {
-               'A': "I am going to aks the manager",
+               'A': "I am going to ask the manager",
                'B': "Let's just ignore it",
                'C': "I am evacuating. RUN RUN RUN.", 
                'D': "We need to investigate"
@@ -238,6 +249,7 @@ while True:
 
 
             )
+            print("Welcome to the Chicken cooking and handling course")
             course(QA_Bank)
         case "B":
             QA_Bank = ({
