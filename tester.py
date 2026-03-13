@@ -108,8 +108,11 @@ def shop():
                             print("You do not have enough points to purchase this item.")
             case "B":
                 print(f"You own these items:")
-                for item in Owned_items: #Loops through the items the user has purchased and displays them.
-                    print(item)
+                if len(Owned_items) == 0: #Checks if the user has any items, if not it tells them they don't have any.
+                    print("You don't have any items yet.")
+                else:
+                    for item in Owned_items: #Loops through the items the user has purchased and displays them.
+                        print(item)
                 input("Press any key to continue: \n") #Pauses the program so the user can see their items 
             case "C":
                 print("Thank you for visiting the shop!")
