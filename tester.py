@@ -9,7 +9,7 @@ Pass = Entry()
 username = "" 
 password = "" 
 attempts = 3
-Wallet = 0
+Wallet = 50
 init(autoreset=True) # resets colour after every print 
 Owned_items = [] #List of items the user has purchased from the shop.
 items = { # dictionary of items in the shop and their prices. Structure is item: (price, item number) item number is used to select item by the user.
@@ -109,7 +109,7 @@ def shop():
                         if Wallet >= price:
                             Wallet -= price
                             Owned_items.append(item)
-                            print(f"You have purchased {item}  for {price} points. You have {Wallet} points left.")
+                            print(f"You have purchased {item} for {price} points. You have {Wallet} points left.")
                         else:
                             print("You do not have enough points to purchase this item.")
             case "B":
