@@ -26,7 +26,7 @@ def login():
     global username, password
     username = User.get()
     password = Pass.get()
-    if username == "u" and password == "p":
+    if username == "user" and password == "pass":
         Log_in_label.config(text="Login successful. See you in the terminal.", fg="green")
         UI.after(2000, UI.destroy) 
     else: # logs failed attempts
