@@ -24,8 +24,8 @@ items = { # dictionary of items in the shop and their prices. Structure is item:
 # Logic for creditiential validation. Occurs when button in pressed. 
 def login():
     global username, password
-    username = User.get()
-    password = Pass.get()
+    username = User.get().replace(" ", "") # removes spaces from the username and password to prevent login issues.
+    password = Pass.get().replace(" ", "")
     if username == "user" and password == "pass":
         Log_in_label.config(text="Login successful. See you in the terminal.", fg="green")
         UI.after(2000, UI.destroy) 
