@@ -1,6 +1,6 @@
 from tkinter import * # for UI
 from random import choice # question choosing
-from colorama import *  # for coloured text
+from colorama import *  # for coloured text to enhance readability. 
 from time import sleep # for delays after answering questions 
 
 UI = Tk() 
@@ -41,11 +41,11 @@ def login():
 def course(QA_Bank):
     global Wallet
     points_earned =  0
-    asked_id = 0 # default value is 0. Used to prevent being assked the same question twice in a row. 
-    input("This should only be started once you on-the-job-training has.By proceeding, you are agreeing that you HAVE received at least 1 shift of training.\nPress any key to continue: ")
-    while points_earned < 50:
+    asked_id = 0 # default value is 0. Used to prevent being asked the same question twice in a row. 
+    input("This should only be started once you on-the-job-training has.By proceeding, you are agreeing that you HAVE received at least 1 shift of training.\nPress any key to continue or close the program: ")
+    while points_earned <= 50:
         question = choice(QA_Bank) # randomly selects a question from the question bank
-        while question.get("id") == asked_id: #slelects a new question if the question selected is the same as the last one. 
+        while question.get("id") == asked_id: #selects a new question if the question selected is the same as the last one. 
             question = choice(QA_Bank)
         while True: # loop is used to keep asking the same question until the user gives a valid answer.
             asked_id = question.get("id")
@@ -56,7 +56,7 @@ def course(QA_Bank):
                 input("Press any key to continue: \n") #Pauses the program so the user can see their items  
             print(question['scenario'])
             sleep(2)
-            for option, text in question['options'].items(): #Loops through options and displays in readable format. 
+            for option, text in question['options'].items(): #Loops through options and displays in readable format, by converting from a dictionary format to a tuple.
                 print(f"{option}: {text}")
             answer = input("\nYour answer: ").upper().replace(" ", "") #User's answer, starts a new line for enhanced readability
             if answer not in question['options']:
@@ -96,7 +96,7 @@ def course(QA_Bank):
 #shop module for user to buy items with points, view their items.  
 def shop():
     global Wallet
-    print(f"Welcome to the shop!\nYou have {Wallet} points to spend.")
+    print(f"Welcome to the shop!\nYou have {Fore.GREEN}{Wallet}{Style.RESET_ALL} points to spend.")
     while True: #Loop that keeps the shop running until the user chooses to leave.
         choice = input("Please choose one of the following options:\nBuy (A)\nView owned items (B)\nLeave (C)\nYour option: ").upper().replace(" ", "") 
         match choice:
@@ -111,11 +111,14 @@ def shop():
                             Owned_items.append(item)
                             print(f"You have purchased {item} for {price} points. You have {Wallet} points left.")
                         else:
-                            print("You do not have enough points to purchase this item.")
+                            print(Fore.RED + "You do not have enough points to purchase this item.")
+                    else: 
+                        print(Fore.RED + "Invalid option. Please try again.")
+                        break
             case "B":
                 print(f"You own these items:")
                 if len(Owned_items) == 0: #Checks if the user has any items, if not it tells them they don't have any.
-                    print("You don't have any items yet.")
+                    print(Fore.RED + "You don't have any items yet.")
                 else:
                     for item in Owned_items: #Loops through the items the user has purchased and displays them.
                         print(item)
@@ -124,7 +127,7 @@ def shop():
                 print("Thank you for visiting the shop!")
                 return
             case _:
-                print("Invalid option, please try again.")
+                print(Fore.RED + "Invalid option, please try again.")
 
 #sets up UI
 UI.title("KFC Scenario Simulator")
@@ -152,7 +155,7 @@ if username == "" or password == "": # if the user closes the window without log
     exit()
 
 while True:
-    Course = input("Choose an option using the letters in the brackets:\n (A) Chicken cooking and handling \n (B) Health and safety procedures \n (C) Go to shop \n Your Input: ").upper().replace(" ", "")
+    Course = input("Choose an option using the letters in the brackets:\n(A) Chicken cooking and handling \n(B) Health and safety procedures \n(C) Go to shop \n(D) Leave\nYour Input: ").upper().replace(" ", "")
     match Course: # casewhere statement in python to check the user's input
         case "A":
             #QA_Bank is a tuple of dictionaries, each containing all the information required by the program. "id" is used to prevent the user from being asked the same question twice. The other fields are self explanatory based on their name.
@@ -346,9 +349,9 @@ while True:
             course(QA_Bank)
         case "C":
             shop() 
+        case "D":
+            print("Ending program. Goodbye!")
+            exit()
         case _:
             print("Invalid option. Please choose A, B, or C.")
             continue # loops back to the input prompt if an invalid option is chosen
-   
-
-    
