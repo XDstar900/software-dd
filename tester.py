@@ -9,7 +9,7 @@ Pass = Entry()
 username = "" 
 password = "" 
 attempts = 3
-Wallet = 50
+Wallet = 0
 init(autoreset=True) # resets colour after every print 
 Owned_items = [] #List of items the user has purchased from the shop.
 items = { # dictionary of items in the shop and their prices. Structure is item: (price, item number) item number is used to select item by the user.
@@ -43,7 +43,7 @@ def course(QA_Bank):
     points_earned =  0
     asked_id = 0 # default value is 0. Used to prevent being asked the same question twice in a row. 
     input("This should only be started once you on-the-job-training has.By proceeding, you are agreeing that you HAVE received at least 1 shift of training.\nPress any key to continue or close the program: ")
-    while points_earned <= 50:
+    while points_earned < 50: # the user must earn 50 points to complete the course. Yes it was changed after the video because of a typo. The logic was just corrected.  
         question = choice(QA_Bank) # randomly selects a question from the question bank
         while question.get("id") == asked_id: #selects a new question if the question selected is the same as the last one. 
             question = choice(QA_Bank)
@@ -105,6 +105,9 @@ def shop():
                     print(f"{item}: {price} points ({input_number})")
                 Purchase = input("Please input the number in brackets for the item you wish to purchase: ").replace(" ", "")
                 for item, (price, input_number) in items.items():
+                    if Purchase not in [input_number for item, (price, input_number) in items.items()]: #Repromts the user if they chose an invlaid item number. 
+                        print(Fore.RED + "Invalid item number. Please try again.")
+                        break
                     if Purchase == input_number: #Only goes through buying process if the user input matches the item number
                         if Wallet >= price:
                             Wallet -= price
@@ -112,9 +115,7 @@ def shop():
                             print(f"You have purchased {item} for {price} points. You have {Wallet} points left.")
                         else:
                             print(Fore.RED + "You do not have enough points to purchase this item.")
-                    else: 
-                        print(Fore.RED + "Invalid option. Please try again.")
-                        break
+            
             case "B":
                 print(f"You own these items:")
                 if len(Owned_items) == 0: #Checks if the user has any items, if not it tells them they don't have any.
@@ -147,7 +148,7 @@ Password_label.grid(row=1, column=0, padx=10, pady=10)
 Pass.grid(row=1, column=1, padx=10, pady=10)
 Login.grid(row=2, column=0, columnspan=2, padx=10, pady=20)
 Log_in_label.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
-
+    
 UI.mainloop() #loads the window
 
 if username == "" or password == "": # if the user closes the window without logging in, the program will end. 
@@ -174,7 +175,7 @@ while True:
                 },
             {
                 "id": 2,
-            "scenario": "You have have the following batches to cook: 1 bag of OR chicken, 2 bags of tenders, and 1 bag of zinger fillets.\n Which batch should you cook first?",
+            "scenario": "You have the following batches to cook: 1 bag of OR chicken, 2 bags of tenders, and 1 bag of zinger fillets.\n Which batch should you cook first?",
             "options": {
                     "A": "Cook the OR chicken first",
                     "B": "Cook the tenders first",
@@ -182,12 +183,12 @@ while True:
                     "D": "Cook whichever batch you feel like first"
             },
             "correct_answer": "A",
-            "explanation": "The OR chicken has takes the longest time to cook so it should be cooked first, unless your manger specifies otherwise.",
+            "explanation": "The OR chicken takes the longest time to cook, so it should be cooked first unless your manager specifies otherwise.",
             "is_challenge": True
             },
             {
             'id': 3,
-            'scenario': 'You have loaded the fryers and finished cooking. What colour chux do you pcik to clean the fryers with? ',
+            'scenario': 'You have loaded the fryers and finished cooking. What colour chux do you pick to clean the fryers with? ',
             'options': {
                 'A': "Green",
                 'B': "Blue",
@@ -195,7 +196,7 @@ while True:
                 'D': "Purple"
             },
             'correct_answer': 'C',
-            'explanation': "You must always use the Red chux after to clean the fryers to prevent decomtamination.",
+            'explanation': "You must always use the red chux to clean the fryers to prevent decontamination.",
             'is_challenge': False
             },
             {
@@ -212,7 +213,7 @@ while True:
             'is_challenge': True
             },
             {'id':5 ,
-         'scenario': "You have recieved a batch of chicken to cook. What is the first thing you do?" ,
+            'scenario': "You have received a batch of chicken to cook. What is the first thing you do?" ,
          'options': {
                'A': "get to it immediately",
                'B': "wash hands and put gloves and apron on ",
@@ -232,11 +233,11 @@ while True:
                'D': "Wash your hands",
          },
          'correct_answer': "D",
-         'explanation': "No matter what. The first you do is wash your hands, after clocking in. No excuses allowed",
+           'explanation': "No matter what, the first thing you do is wash your hands after clocking in. No excuses allowed.",
          'is_challenge': False
         },
         {'id':7 ,
-         'scenario': "Huh that is wierd? What is the fryer doing?", 
+           'scenario': "Huh that is weird? What is the fryer doing?", 
          'options': {
                'A': "I am going to ask the manager",
                'B': "Let's just ignore it",
@@ -278,7 +279,7 @@ while True:
             'D': 'They are just decorative and have no specific purpose'
         },
         'correct_answer': 'A',
-        'explanation': 'You are contamineted with raw chicken so you will use the red handle. Green is uncontaminated people. ',
+        'explanation': 'You are contaminated with raw chicken, so you will use the red handle. Green is for uncontaminated people.',
         'is_challenge': False
     },
     {
@@ -346,6 +347,7 @@ while True:
         'explanation': 'Non-slip, oil-resistant shoes prevent slips and falls in the kitchen. This protects against injuries from hot oil and wet floors.',
         'is_challenge': False
     })
+            print("Welcome to the Health and safety procedures course")
             course(QA_Bank)
         case "C":
             shop() 
@@ -353,5 +355,5 @@ while True:
             print("Ending program. Goodbye!")
             exit()
         case _:
-            print("Invalid option. Please choose A, B, or C.")
+            print("Invalid option. Please choose A, B, C or D.")
             continue # loops back to the input prompt if an invalid option is chosen
