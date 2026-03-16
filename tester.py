@@ -160,193 +160,195 @@ while True:
     match Course: # casewhere statement in python to check the user's input
         case "A":
             #QA_Bank is a tuple of dictionaries, each containing all the information required by the program. "id" is used to prevent the user from being asked the same question twice. The other fields are self explanatory based on their name.
-            QA_Bank = ({
+            QA_Bank = (
+                {
                     'id': 1,
                     'scenario': 'The refrigerator temperature reads 8°C. Should you:',
                     'options': {
                         'A': 'Continue using it - close enough',
                         'B': 'Report it to management immediately',
                         'C': 'Try to adjust temperature yourself',
-                        'D': 'Move all food to another fridge\n'
+                        'D': 'Move all food to another fridge'
                     },
                     'correct_answer': 'B',
                     'explanation': 'Temperature control issues must be reported immediately.',
                     'is_challenge': False
                 },
-            {
-                "id": 2,
-            "scenario": "You have the following batches to cook: 1 bag of OR chicken, 2 bags of tenders, and 1 bag of zinger fillets.\n Which batch should you cook first?",
-            "options": {
-                    "A": "Cook the OR chicken first",
-                    "B": "Cook the tenders first",
-                    "C": "Cook the zinger fillets first",
-                    "D": "Cook whichever batch you feel like first"
-            },
-            "correct_answer": "A",
-            "explanation": "The OR chicken takes the longest time to cook, so it should be cooked first unless your manager specifies otherwise.",
-            "is_challenge": True
-            },
-            {
-            'id': 3,
-            'scenario': 'You have loaded the fryers and finished cooking. What colour chux do you pick to clean the fryers with? ',
-            'options': {
-                'A': "Green",
-                'B': "Blue",
-                'C': 'Red',
-                'D': "Purple"
-            },
-            'correct_answer': 'C',
-            'explanation': "You must always use the red chux to clean the fryers to prevent decontamination.",
-            'is_challenge': False
-            },
-            {
-            'id': 4,
-            'scenario':  "It is a busy night and we need to make sure the chicken texture is as good as possible. What strategy do we use to maintain the flour to prevent clumps? ",
-            'options': {
-                'A': "Sift and top the lugs up as you alternate between them, when they need to.",
-                'B': "Save sifting for the end" ,
-                'C': "Only do it when you need to",
-                'D': "Do it after every bag", 
-            },
-            'correct_answer': "A",
-            'explanation': "Sifting and topping up the flour as you go, ensures that the flour is top quality while allowing you to bread all the chicken quickly.",
-            'is_challenge': True
-            },
-            {'id':5 ,
-            'scenario': "You have received a batch of chicken to cook. What is the first thing you do?" ,
-         'options': {
-               'A': "get to it immediately",
-               'B': "wash hands and put gloves and apron on ",
-               'C': "Continue what I was doing",
-               'D': "Get the chicken",
-         },
-         'correct_answer': "B",
-         'explanation': "Since you are working with raw chicken, hygiene is important.",
-         'is_challenge': False
-         },
-         {'id':6 ,
-         'scenario': "You have just clocked in for your shift. What is the first thing you do?" ,
-         'options': {
-               'A': "Start your tasks",
-               'B': "Set up your station",
-               'C': "Inquire about any specials or important information for the day",
-               'D': "Wash your hands",
-         },
-         'correct_answer': "D",
-           'explanation': "No matter what, the first thing you do is wash your hands after clocking in. No excuses allowed.",
-         'is_challenge': False
-        },
-        {'id':7 ,
-           'scenario': "Huh that is weird? What is the fryer doing?", 
-         'options': {
-               'A': "I am going to ask the manager",
-               'B': "Let's just ignore it",
-               'C': "I am evacuating. RUN RUN RUN.", 
-               'D': "We need to investigate"
-         },
-         'correct_answer': "A",
-         'explanation': "Chances are it is completely normal so ask just ask someone. If it does need investigating, inform the manager on duty. They will know what to do.",
-         'is_challenge': False 
-        }
-
-
-
-
+                {
+                    "id": 2,
+                    "scenario": "You have the following batches to cook: 1 bag of OR chicken, 2 bags of tenders, and 1 bag of zinger fillets.\n Which batch should you cook first?",
+                    "options": {
+                        "A": "Cook the OR chicken first",
+                        "B": "Cook the tenders first",
+                        "C": "Cook the zinger fillets first",
+                        "D": "Cook whichever batch you feel like first"
+                    },
+                    "correct_answer": "A",
+                    "explanation": "The OR chicken takes the longest time to cook, so it should be cooked first unless your manager specifies otherwise.",
+                    "is_challenge": True
+                },
+                {
+                    'id': 3,
+                    'scenario': 'You have loaded the fryers and finished cooking. What colour chux do you pick to clean the fryers with? ',
+                    'options': {
+                        'A': "Green",
+                        'B': "Blue",
+                        'C': 'Red',
+                        'D': "Purple"
+                    },
+                    'correct_answer': 'C',
+                    'explanation': "You must always use the red chux to clean the fryers to prevent decontamination.",
+                    'is_challenge': False
+                },
+                {
+                    'id': 4,
+                    'scenario': "It is a busy night and we need to make sure the chicken texture is as good as possible. What strategy do we use to maintain the flour to prevent clumps? ",
+                    'options': {
+                        'A': "Sift and top the lugs up as you alternate between them, when they need to.",
+                        'B': "Save sifting for the end",
+                        'C': "Only do it when you need to",
+                        'D': "Do it after every bag",
+                    },
+                    'correct_answer': "A",
+                    'explanation': "Sifting and topping up the flour as you go, ensures that the flour is top quality while allowing you to bread all the chicken quickly.",
+                    'is_challenge': True
+                },
+                {
+                    'id': 5,
+                    'scenario': "You have received a batch of chicken to cook. What is the first thing you do?",
+                    'options': {
+                        'A': "get to it immediately",
+                        'B': "wash hands and put gloves and apron on ",
+                        'C': "Continue what I was doing",
+                        'D': "Get the chicken",
+                    },
+                    'correct_answer': "B",
+                    'explanation': "Since you are working with raw chicken, hygiene is important.",
+                    'is_challenge': False
+                },
+                {
+                    'id': 6,
+                    'scenario': "You have just clocked in for your shift. What is the first thing you do?",
+                    'options': {
+                        'A': "Start your tasks",
+                        'B': "Set up your station",
+                        'C': "Inquire about any specials or important information for the day",
+                        'D': "Wash your hands",
+                    },
+                    'correct_answer': "D",
+                    'explanation': "No matter what, the first thing you do is wash your hands after clocking in. No excuses allowed.",
+                    'is_challenge': False
+                },
+                {
+                    'id': 7,
+                    'scenario': "Huh that is weird? What is the fryer doing?",
+                    'options': {
+                        'A': "I am going to ask the manager",
+                        'B': "Let's just ignore it",
+                        'C': "I am evacuating. RUN RUN RUN.",
+                        'D': "We need to investigate"
+                    },
+                    'correct_answer': "A",
+                    'explanation': "Chances are it is completely normal so ask just ask someone. If it does need investigating, inform the manager on duty. They will know what to do.",
+                    'is_challenge': False
+                }
             )
             print("Welcome to the Chicken cooking and handling course")
             course(QA_Bank)
         case "B":
-            QA_Bank = ({
-        'id': 1,
-        'scenario': 'You notice that the oil in the fryer has turned dark and has a strong odor. What should you do?',
-        'options': {
-            'A': 'Continue using it until the end of the shift',
-            'B': 'Add fresh oil to dilute the old oil',
-            'C': 'Report it to the manager and follow the oil filtering/changing procedure',
-            'D': 'Turn off the fryer and leave it for the next shift'
-        },
-        'correct_answer': 'C',
-        'explanation': 'Degraded oil affects food quality and safety. Report it to your manager and follow proper oil changing procedures.',
-        'is_challenge': False
-    },
-    {
-        'id': 2,
-        'scenario': 'You are about to enter the walk-in cooler to grab chicken after breading up a batch. Which colour handle do you use?',
-        'options': {
-            'A': 'Red',
-            'B': 'Green',
-            'C': 'Whichever one',
-            'D': 'They are just decorative and have no specific purpose'
-        },
-        'correct_answer': 'A',
-        'explanation': 'You are contaminated with raw chicken, so you will use the red handle. Green is for uncontaminated people.',
-        'is_challenge': False
-    },
-    {
-        'id': 3,
-        'scenario': 'You accidentally spill hot oil on the floor near the fryer station. What is your first action?',
-        'options': {
-            'A': 'Continue working and clean it up later when less busy',
-            'B': 'Warn nearby team members, block off the area, and begin proper cleanup procedures',
-            'C': 'Pour water on it to cool it down quickly',
-            'D': 'Cover it with cardboard boxes until it cools'
-        },
-        'correct_answer': 'B',
-        'explanation': 'Hot oil spills are serious hazards requiring immediate action. Warn others, block the area, and never use water on hot oil.',
-        'is_challenge': False
-    },
-    {
-        'id': 4,
-        'scenario': 'A team member in the kitchen has a visible cut on their hand. What is the correct procedure?',
-        'options': {
-            'A': 'They can continue working as long as they wash their hands frequently',
-            'B': 'Apply a blue detectable bandage and wear a food-safe glove over the wound',
-            'C': 'Cover with a regular bandage and continue handling food',
-            'D': 'Send them home immediately regardless of wound severity'
-        },
-        'correct_answer': 'B',
-        'explanation': 'Blue detectable bandages are visible if they fall off and can be detected by metal detectors. A food-safe glove must be worn over the bandage.',
-        'is_challenge': True
-    },
-    {
-        'id': 5,
-        'scenario': 'How often should you wash your hands during your shift?',
-        'options': {
-            'A': 'Only at the start and end of your shift',
-            'B': 'Every 30 minutes regardless of tasks',
-            'C': 'After handling raw chicken, using the restroom, touching your face, handling trash, and before starting food prep',
-            'D': 'Only when your hands are visibly dirty'
-        },
-        'correct_answer': 'C',
-        'explanation': 'Handwashing must occur at critical control points to prevent cross-contamination. This includes after handling raw products, using the restroom, and before food prep.',
-        'is_challenge': False
-    },
-    {
-        'id': 6,
-        'scenario': 'You are breading chicken and notice that a batch has been sitting at room temperature for 3 hours. What should you do?',
-        'options': {
-            'A': 'Use it quickly before it goes bad',
-            'B': 'Put it back in the cooler to bring the temperature down',
-            'C': 'Discard the chicken and report the incident to your manager',
-            'D': 'Smell the chicken to check if it is still good'
-        },
-        'correct_answer': 'C',
-        'explanation': 'Chicken in the danger zone (4°C-60°C) for over 2 hours must be discarded. Bacteria multiply rapidly making food unsafe regardless of smell or appearance.',
-        'is_challenge': True
-    },
-    {
-        'id': 7,
-        'scenario': 'What type of footwear should be worn in the KFC back of house area?',
-        'options': {
-            'A': 'Any comfortable closed-toe shoes',
-            'B': 'Non-slip, closed-toe shoes with oil-resistant soles',
-            'C': 'Steel-toe boots only',
-            'D': 'Sneakers with good grip'
-        },
-        'correct_answer': 'B',
-        'explanation': 'Non-slip, oil-resistant shoes prevent slips and falls in the kitchen. This protects against injuries from hot oil and wet floors.',
-        'is_challenge': False
-    })
+            QA_Bank = (
+                {
+                    'id': 1,
+                    'scenario': 'You notice that the oil in the fryer has turned dark and has a strong odor. What should you do?',
+                    'options': {
+                        'A': 'Continue using it until the end of the shift',
+                        'B': 'Add fresh oil to dilute the old oil',
+                        'C': 'Report it to the manager and follow the oil filtering/changing procedure',
+                        'D': 'Turn off the fryer and leave it for the next shift'
+                    },
+                    'correct_answer': 'C',
+                    'explanation': 'Degraded oil affects food quality and safety. Report it to your manager and follow proper oil changing procedures.',
+                    'is_challenge': False
+                },
+                {
+                    'id': 2,
+                    'scenario': 'You are about to enter the walk-in cooler to grab chicken after breading up a batch. Which colour handle do you use?',
+                    'options': {
+                        'A': 'Red',
+                        'B': 'Green',
+                        'C': 'Whichever one',
+                        'D': 'They are just decorative and have no specific purpose'
+                    },
+                    'correct_answer': 'A',
+                    'explanation': 'You are contaminated with raw chicken, so you will use the red handle. Green is for uncontaminated people.',
+                    'is_challenge': False
+                },
+                {
+                    'id': 3,
+                    'scenario': 'You accidentally spill hot oil on the floor near the fryer station. What is your first action?',
+                    'options': {
+                        'A': 'Continue working and clean it up later when less busy',
+                        'B': 'Warn nearby team members, block off the area, and begin proper cleanup procedures',
+                        'C': 'Pour water on it to cool it down quickly',
+                        'D': 'Cover it with cardboard boxes until it cools'
+                    },
+                    'correct_answer': 'B',
+                    'explanation': 'Hot oil spills are serious hazards requiring immediate action. Warn others, block the area, and never use water on hot oil.',
+                    'is_challenge': False
+                },
+                {
+                    'id': 4,
+                    'scenario': 'A team member in the kitchen has a visible cut on their hand. What is the correct procedure?',
+                    'options': {
+                        'A': 'They can continue working as long as they wash their hands frequently',
+                        'B': 'Apply a blue detectable bandage and wear a food-safe glove over the wound',
+                        'C': 'Cover with a regular bandage and continue handling food',
+                        'D': 'Send them home immediately regardless of wound severity'
+                    },
+                    'correct_answer': 'B',
+                    'explanation': 'Blue detectable bandages are visible if they fall off and can be detected by metal detectors. A food-safe glove must be worn over the bandage.',
+                    'is_challenge': True
+                },
+                {
+                    'id': 5,
+                    'scenario': 'How often should you wash your hands during your shift?',
+                    'options': {
+                        'A': 'Only at the start and end of your shift',
+                        'B': 'Every 30 minutes regardless of tasks',
+                        'C': 'After handling raw chicken, using the restroom, touching your face, handling trash, and before starting food prep',
+                        'D': 'Only when your hands are visibly dirty'
+                    },
+                    'correct_answer': 'C',
+                    'explanation': 'Handwashing must occur at critical control points to prevent cross-contamination. This includes after handling raw products, using the restroom, and before food prep.',
+                    'is_challenge': False
+                },
+                {
+                    'id': 6,
+                    'scenario': 'You are breading chicken and notice that a batch has been sitting at room temperature for 3 hours. What should you do?',
+                    'options': {
+                        'A': 'Use it quickly before it goes bad',
+                        'B': 'Put it back in the cooler to bring the temperature down',
+                        'C': 'Discard the chicken and report the incident to your manager',
+                        'D': 'Smell the chicken to check if it is still good'
+                    },
+                    'correct_answer': 'C',
+                    'explanation': 'Chicken in the danger zone (4°C-60°C) for over 2 hours must be discarded. Bacteria multiply rapidly making food unsafe regardless of smell or appearance.',
+                    'is_challenge': True
+                },
+                {
+                    'id': 7,
+                    'scenario': 'What type of footwear should be worn in the KFC back of house area?',
+                    'options': {
+                        'A': 'Any comfortable closed-toe shoes',
+                        'B': 'Non-slip, closed-toe shoes with oil-resistant soles',
+                        'C': 'Steel-toe boots only',
+                        'D': 'Sneakers with good grip'
+                    },
+                    'correct_answer': 'B',
+                    'explanation': 'Non-slip, oil-resistant shoes prevent slips and falls in the kitchen. This protects against injuries from hot oil and wet floors.',
+                    'is_challenge': False
+                }
+            )
             print("Welcome to the Health and safety procedures course")
             course(QA_Bank)
         case "C":
