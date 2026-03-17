@@ -93,7 +93,7 @@ def course(QA_Bank):
         print(f"You now have {Wallet} points to spend at the shop.")
         input("Press any key to continue:  ") #Pauses the program so the user can see read output 
 
-#shop module for user to buy items with points, view their items.  
+#shop module for user to buy items with points and view their items.  
 def shop():
     global Wallet
     print(f"Welcome to the shop!\nYou have {Fore.GREEN}{Wallet}{Style.RESET_ALL} points to spend.")
@@ -105,7 +105,7 @@ def shop():
                     print(f"{item}: {price} points ({input_number})")
                 Purchase = input("Please input the number in brackets for the item you wish to purchase: ").replace(" ", "")
                 for item, (price, input_number) in items.items():
-                    if Purchase not in [input_number for item, (price, input_number) in items.items()]: #Repromts the user if they chose an invlaid item number. 
+                    if Purchase not in [input_number for item, (price, input_number) in items.items()]: #Reprompts the user if they chose an invalid item number. 
                         print(Fore.RED + "Invalid item number. Please try again.")
                         break
                     if Purchase == input_number: #Only goes through buying process if the user input matches the item number
